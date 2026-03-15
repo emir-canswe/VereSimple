@@ -1,0 +1,11 @@
+<Window x:Class="VereSimple.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="VereSimple" Height="600" Width="900">
+    <Grid>
+        <TextBlock Text="VereSimple'a Hoşgeldiniz!"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="24"/>
+    </Grid>
+</Window>
