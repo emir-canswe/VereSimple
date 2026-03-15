@@ -32,10 +32,10 @@ public partial class CustomerDetailWindow : Window
         _customerService = new CustomerService(customerRepo, transactionRepo);
         _transactionService = new TransactionService(transactionRepo);
 
-        LoadData();
+        Loaded += async (s, e) => await LoadDataAsync();
     }
 
-    private async void LoadData()
+    private async Task LoadDataAsync()
     {
         var customer = await _customerService.GetCustomerByIdAsync(_customerId);
         if (customer == null) return;
@@ -61,17 +61,20 @@ public partial class CustomerDetailWindow : Window
         }).ToList();
     }
 
-    private async void BtnAddDebt_Click(object sender, RoutedEventArgs e)
+    private void BtnAddDebt_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new AddTransactionWindow(_customerId, "DEBT");
+        dialog.Owner = this;
         dialog.ShowDialog();
-        LoadData();
+        Loaded += async (s, ev) => await LoadDataAsync();
+        _ = LoadDataAsync();
     }
 
-    private async void BtnAddPayment_Click(object sender, RoutedEventArgs e)
+    private void BtnAddPayment_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new AddTransactionWindow(_customerId, "PAYMENT");
+        dialog.Owner = this;
         dialog.ShowDialog();
-        LoadData();
+        _ = LoadDataAsync();
     }
 }

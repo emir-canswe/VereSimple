@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\App.xaml
-5488234437
+8-699789403
 
-20-1474547071
+23-1315327165
 218208874848
-MainWindow.xaml;Views\CustomersPage.xaml;Views\DashboardPage.xaml;Views\DashboardWindow.xaml;Views\LoginWindow.xaml;
+MainWindow.xaml;Views\AddCustomerWindow.xaml;Views\AddTransactionWindow.xaml;Views\CustomerDetailWindow.xaml;Views\CustomersPage.xaml;Views\DashboardPage.xaml;Views\DashboardWindow.xaml;Views\LoginWindow.xaml;
 
 False
 

@@ -40,16 +40,20 @@ public class TransactionRepository : ITransactionRepository
 
     public async Task<decimal> GetTotalDebtByCustomerAsync(int customerId)
     {
-        return await _context.Transactions
+        var amounts = await _context.Transactions
             .Where(t => t.CustomerId == customerId && t.Type == "DEBT")
-            .SumAsync(t => t.Amount);
+            .Select(t => t.Amount)
+            .ToListAsync();
+        return amounts.Any() ? amounts.Sum() : 0;
     }
 
     public async Task<decimal> GetTotalPaymentByCustomerAsync(int customerId)
     {
-        return await _context.Transactions
+        var amounts = await _context.Transactions
             .Where(t => t.CustomerId == customerId && t.Type == "PAYMENT")
-            .SumAsync(t => t.Amount);
+            .Select(t => t.Amount)
+            .ToListAsync();
+        return amounts.Any() ? amounts.Sum() : 0;
     }
 
     public async Task<List<Transaction>> GetByDateRangeAsync(DateTime start, DateTime end)

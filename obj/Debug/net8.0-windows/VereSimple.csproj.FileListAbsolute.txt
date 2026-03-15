@@ -134,3 +134,9 @@ C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\V
 C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\Views\DashboardPage.g.cs
 C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\Views\DashboardWindow.g.cs
 C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\VereSimple.sourcelink.json
+C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\Views\AddCustomerWindow.baml
+C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\Views\CustomerDetailWindow.baml
+C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\Views\AddCustomerWindow.g.cs
+C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\Views\CustomerDetailWindow.g.cs
+C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\Views\AddTransactionWindow.baml
+C:\Users\heaven\OneDrive\Desktop\myProject\VereSimple\obj\Debug\net8.0-windows\Views\AddTransactionWindow.g.cs

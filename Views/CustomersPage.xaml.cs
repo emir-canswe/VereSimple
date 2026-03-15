@@ -1,9 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using VereSimple.Data;
-using VereSimple.Models;
-using VereSimple.Services;
 using VereSimple.Repositories;
+using VereSimple.Services;
 
 namespace VereSimple.Views;
 
@@ -27,79 +26,114 @@ public partial class CustomersPage : Page
         var customerRepo = new CustomerRepository(db);
         var transactionRepo = new TransactionRepository(db);
         _customerService = new CustomerService(customerRepo, transactionRepo);
-        LoadCustomers();
+        Loaded += async (s, e) => await LoadCustomersAsync();
     }
 
-    private async void LoadCustomers(string search = "")
+    private async Task LoadCustomersAsync(string search = "")
     {
-        var customers = string.IsNullOrEmpty(search)
-            ? await _customerService.GetAllCustomersAsync()
-            : await _customerService.SearchCustomersAsync(search);
-
-        var list = new List<CustomerViewModel>();
-        foreach (var c in customers)
+        try
         {
-            var debt = await _customerService.GetRemainingDebtAsync(c.Id);
-            list.Add(new CustomerViewModel
-            {
-                Id = c.Id,
-                FullName = c.FullName,
-                Phone = c.Phone,
-                CreatedAt = c.CreatedAt,
-                RemainingDebt = debt
-            });
-        }
+            var customers = string.IsNullOrEmpty(search)
+                ? await _customerService.GetAllCustomersAsync()
+                : await _customerService.SearchCustomersAsync(search);
 
-        CustomersGrid.ItemsSource = list;
+            var list = new List<CustomerViewModel>();
+            foreach (var c in customers)
+            {
+                var debt = await _customerService.GetRemainingDebtAsync(c.Id);
+                list.Add(new CustomerViewModel
+                {
+                    Id = c.Id,
+                    FullName = c.FullName,
+                    Phone = c.Phone,
+                    CreatedAt = c.CreatedAt,
+                    RemainingDebt = debt
+                });
+            }
+
+            CustomersGrid.ItemsSource = list;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
     {
-        LoadCustomers(TxtSearch.Text.Trim());
+        _ = LoadCustomersAsync(TxtSearch.Text.Trim());
     }
 
     private void BtnAddCustomer_Click(object sender, RoutedEventArgs e)
     {
-        var dialog = new AddCustomerWindow();
-        dialog.ShowDialog();
-        LoadCustomers();
+        try
+        {
+            var dialog = new AddCustomerWindow();
+            dialog.ShowDialog();
+            _ = LoadCustomersAsync();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void BtnDetail_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button btn && btn.Tag is int id)
+        try
         {
-            var detail = new CustomerDetailWindow(id);
-            detail.ShowDialog();
-            LoadCustomers();
+            if (sender is Button btn && btn.Tag is int id)
+            {
+                var detail = new CustomerDetailWindow(id);
+                detail.ShowDialog();
+                _ = LoadCustomersAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
     private void BtnEdit_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button btn && btn.Tag is int id)
+        try
         {
-            var edit = new AddCustomerWindow(id);
-            edit.ShowDialog();
-            LoadCustomers();
+            if (sender is Button btn && btn.Tag is int id)
+            {
+                var edit = new AddCustomerWindow(id);
+                edit.ShowDialog();
+                _ = LoadCustomersAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
     private async void BtnDelete_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button btn && btn.Tag is int id)
+        try
         {
-            var result = MessageBox.Show(
-                "Bu müşteriyi silmek istediğinize emin misiniz?",
-                "Silme Onayı",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.Yes)
+            if (sender is Button btn && btn.Tag is int id)
             {
-                await _customerService.DeleteCustomerAsync(id);
-                LoadCustomers();
+                var result = MessageBox.Show(
+                    "Bu müşteriyi silmek istediğinize emin misiniz?",
+                    "Silme Onayı",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    await _customerService.DeleteCustomerAsync(id);
+                    await LoadCustomersAsync();
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }
