@@ -9,47 +9,75 @@
                        Foreground="#2C3E50" Margin="0,0,0,25"/>
 
             <!-- Metrik Kartları -->
-            <WrapPanel>
-                <!-- Toplam Borç -->
-                <Border Width="200" Height="110" Background="#E74C3C"
+            <WrapPanel Margin="0,0,0,30">
+                <Border Width="210" Height="110" Background="#E74C3C"
                         CornerRadius="8" Margin="0,0,15,15">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Toplam Borç" Foreground="White" FontSize="13"/>
-                        <TextBlock x:Name="TxtTotalDebt" Text="0 ₺"
-                                   Foreground="White" FontSize="26" FontWeight="Bold"/>
+                        <TextBlock Text="Toplam Borç" Foreground="White"
+                                   FontSize="13" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TxtTotalDebt" Text="0,00 ₺"
+                                   Foreground="White" FontSize="26" FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Toplam Tahsilat -->
-                <Border Width="200" Height="110" Background="#27AE60"
+                <Border Width="210" Height="110" Background="#27AE60"
                         CornerRadius="8" Margin="0,0,15,15">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Toplam Tahsilat" Foreground="White" FontSize="13"/>
-                        <TextBlock x:Name="TxtTotalPayment" Text="0 ₺"
-                                   Foreground="White" FontSize="26" FontWeight="Bold"/>
+                        <TextBlock Text="Toplam Tahsilat" Foreground="White"
+                                   FontSize="13" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TxtTotalPayment" Text="0,00 ₺"
+                                   Foreground="White" FontSize="26" FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Kalan Borç -->
-                <Border Width="200" Height="110" Background="#2980B9"
+                <Border Width="210" Height="110" Background="#2980B9"
                         CornerRadius="8" Margin="0,0,15,15">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Kalan Borç" Foreground="White" FontSize="13"/>
-                        <TextBlock x:Name="TxtRemainingDebt" Text="0 ₺"
-                                   Foreground="White" FontSize="26" FontWeight="Bold"/>
+                        <TextBlock Text="Kalan Borç" Foreground="White"
+                                   FontSize="13" HorizontalAlignment="Center"/>
+                        <TextBlock x:Name="TxtRemainingDebt" Text="0,00 ₺"
+                                   Foreground="White" FontSize="26" FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Toplam Müşteri -->
-                <Border Width="200" Height="110" Background="#8E44AD"
+                <Border Width="210" Height="110" Background="#8E44AD"
                         CornerRadius="8" Margin="0,0,15,15">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Toplam Müşteri" Foreground="White" FontSize="13"/>
+                        <TextBlock Text="Toplam Müşteri" Foreground="White"
+                                   FontSize="13" HorizontalAlignment="Center"/>
                         <TextBlock x:Name="TxtTotalCustomers" Text="0"
-                                   Foreground="White" FontSize="26" FontWeight="Bold"/>
+                                   Foreground="White" FontSize="26" FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
             </WrapPanel>
+
+            <!-- En Borçlu Müşteriler -->
+            <TextBlock Text="En Borçlu Müşteriler" FontSize="18" FontWeight="Bold"
+                       Foreground="#2C3E50" Margin="0,0,0,12"/>
+
+            <DataGrid x:Name="TopDebtorsGrid"
+                      AutoGenerateColumns="False" IsReadOnly="True"
+                      GridLinesVisibility="Horizontal"
+                      BorderBrush="#BDC3C7" BorderThickness="1"
+                      RowHeight="38" FontSize="13"
+                      CanUserResizeRows="False"
+                      AlternatingRowBackground="#F8F9FA"
+                      MaxHeight="250">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Ad Soyad"
+                        Binding="{Binding FullName}" Width="*"/>
+                    <DataGridTextColumn Header="Telefon"
+                        Binding="{Binding Phone}" Width="130"/>
+                    <DataGridTextColumn Header="Kalan Borç"
+                        Binding="{Binding RemainingDebt, StringFormat={}{0:N2} ₺}"
+                        Width="130"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
         </StackPanel>
     </ScrollViewer>
 </Page>

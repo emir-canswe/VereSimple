@@ -41,15 +41,19 @@ public class CustomerRepository : ICustomerRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+public async Task DeleteAsync(int id)
+{
+    var customer = await _context.Customers
+        .Include(c => c.Transactions)
+        .FirstOrDefaultAsync(c => c.Id == id);
+
+    if (customer != null)
     {
-        var customer = await _context.Customers.FindAsync(id);
-        if (customer != null)
-        {
-            customer.IsActive = false;
-            await _context.SaveChangesAsync();
-        }
+        _context.Transactions.RemoveRange(customer.Transactions);
+        _context.Customers.Remove(customer);
+        await _context.SaveChangesAsync();
     }
+}
 
     public async Task<List<Customer>> SearchAsync(string keyword)
     {
